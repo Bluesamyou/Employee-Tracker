@@ -25,8 +25,27 @@ $(document).ready(function(){
             role: empRole,
             startDate: startDate,
             rate: monthlyRate
-          })
+          });
 
-      })
+      });
+    
+      database.ref().on("child_added", function(snapshot){
+        console.log(snapshot.val());
+        console.log(snapshot.val().name);
+        console.log(snapshot.val().role);
+        console.log(snapshot.val().startDate);
+        console.log(snapshot.val().rate);
+        
+        var appendTr = $("<tr>");
+        var nameTd = $("<td>").text(snapshot.val().name);
+        var roleTd = $("<td>").text(snapshot.val().role);
+        var startTd = $("<td>").text(snapshot.val().startDate);
+        var rateTd = $("<td>").text(snapshot.val().rate);
+        
+        var addRow = appendTr.append([nameTd, roleTd, startTd, rateTd]);
+        $("tbody").append(addRow);
+        
+      });
+
 
 })
