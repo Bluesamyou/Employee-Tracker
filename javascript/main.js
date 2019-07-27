@@ -12,5 +12,21 @@ $(document).ready(function(){
       firebase.initializeApp(firebaseConfig);
 
       var database = firebase.database();
+      $("#form-submit").on("click", function(event){
+        event.preventDefault();
+  
+        var employeeName = $("#empNumberInput").val().trim();
+        var empRole = $("#empRole").val().trim();
+        var startDate = $("#startDate").val().trim();
+        var monthlyRate = $("#monthlyRate").val().trim();
+
+        database.ref().push({
+            name: employeeName,
+            role: empRole,
+            startDate: startDate,
+            rate: monthlyRate
+          })
+
+      })
 
 })
