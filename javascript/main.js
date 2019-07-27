@@ -20,29 +20,42 @@ $(document).ready(function(){
         var startDate = $("#startDate").val().trim();
         var monthlyRate = $("#monthlyRate").val().trim();
 
+
         database.ref().push({
             name: employeeName,
             role: empRole,
             startDate: startDate,
-            rate: monthlyRate
+            rate: monthlyRate, 
           });
 
       });
     
       database.ref().on("child_added", function(snapshot){
-        console.log(snapshot.val());
-        console.log(snapshot.val().name);
-        console.log(snapshot.val().role);
-        console.log(snapshot.val().startDate);
-        console.log(snapshot.val().rate);
+        // console.log(snapshot.val());
+        // console.log(snapshot.val().name);
+        // console.log(snapshot.val().role);
+        // console.log(snapshot.val().startDate);
+        // console.log(snapshot.val().rate);
+
+
+        var monthsWorked = -(moment(snapshot.val().startDate).diff(moment(), "months"))
+
+        var totalBilled = monthsWorked * snapshot.val().rate
         
         var appendTr = $("<tr>");
         var nameTd = $("<td>").text(snapshot.val().name);
         var roleTd = $("<td>").text(snapshot.val().role);
         var startTd = $("<td>").text(snapshot.val().startDate);
+        var monthWorkedTd = $("<td>").text(monthsWorked);
         var rateTd = $("<td>").text(snapshot.val().rate);
+        var totalBilledTd = $("<td>").text(totalBilled);
+
+
+
+
+
         
-        var addRow = appendTr.append([nameTd, roleTd, startTd, rateTd]);
+        var addRow = appendTr.append([nameTd, roleTd, startTd,monthWorkedTd, rateTd, totalBilledTd]);
         $("tbody").append(addRow);
         
       });
